@@ -2,7 +2,8 @@
 const page = () => {
   return (
     <div>
-      dashbkard
+      dashboard
+      <button className="">SignOut</button>
     </div>
   )
 }

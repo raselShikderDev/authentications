@@ -24,7 +24,7 @@ export default function LoginPage() {
           <p>Welcome, {session.user?.email}!</p>
           <button
             onClick={() => signOut()}
-            className="px-4 py-2 bg-red-500 text-white rounded"
+            className="px-4 py-2 hover:bg-red-600 active:scale-105 bg-red-500 text-white rounded"
           >
             Sign Out
           </button>
@@ -48,14 +48,14 @@ export default function LoginPage() {
             />
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-500 cursor-pointer text-white rounded"
+              className="px-4 py-2 hover:bg-blue-600 active:scale-105 bg-blue-500 cursor-pointer text-white rounded"
             >
               Login Now
             </button>
           </form>
           <div className="mt-10 text-center">
             <button
-              className="px-4 py-1.5 bg-gray-900 cursor-pointer text-white rounded"
+              className="px-4 py-1.5 hover:bg-gray-800 active:scale-105 bg-gray-900 cursor-pointer text-white rounded"
               onClick={() => signIn("github")}
             >
               Sign in with Github

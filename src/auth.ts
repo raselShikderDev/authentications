@@ -22,6 +22,8 @@ export const { auth, handlers } = NextAuth({
       },
 
       async authorize(credentials) {
+        console.log("Finding User");
+
         const user = users.find(
           (user) =>
             (user.email === credentials.email &&
@@ -29,8 +31,11 @@ export const { auth, handlers } = NextAuth({
             (user.username === credentials.email &&
               user.password === credentials.password)
         );
-        if (!user) return null;
-
+        if (!user) {
+          console.log(" User not Found");
+          return null;
+        }
+        console.log(" User Found");
         return {
           id: user?.id.toLocaleString(),
           email: user?.email,
