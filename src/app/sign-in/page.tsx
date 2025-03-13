@@ -1,6 +1,3 @@
-"use client";
-
-import { signIn } from "@/auth";
 
 export default function Login() {
   return (
@@ -32,9 +29,9 @@ export default function Login() {
               </button>
             </div>
             {/* <button onClick={() => signIn("github")}></button> */}
-            <button onClick={() => signIn("github")}>
+            {/* <button className="hover:pointer-events-auto" onClick={() => signin()}>
               Sign in with GitHub
-            </button>
+            </button> */}
           </div>
         </form>
         <div>
