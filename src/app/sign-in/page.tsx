@@ -1,43 +1,68 @@
 
-export default function Login() {
+"use client";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { useState } from "react";
+
+export default function LoginPage() {
+  const { data: session } = useSession();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false, // Prevents redirect and allows manual handling of errors
+    });
+  };
+
   return (
-    <div className="flex min-h-svh w-full items-center  justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm bg-red">
-        <form className="" method="get">
-          <h1 className="text-center text-4xl font-bold">Login</h1>
-          <div className="mt-10 space-y-2">
-            <div>
-              <input
-                type="email"
-                placeholder="Email Addess"
-                className="border-black/20 w-full border-[1px] px-2 py-0.5 shadow-md rounded"
-              />
-            </div>
-            <div>
-              <input
-                type="password"
-                placeholder="Password"
-                className="border-black/20 w-full border-[1px] px-2 py-0.5 shadow-md rounded"
-              />
-            </div>
-            <div className=" text-center">
-              <button
-                type="submit"
-                className="bg-gray-800 text-white px-4 py-1 hover:scale-105 rounded shadow-md"
-              >
-                Submit
-              </button>
-            </div>
-            {/* <button onClick={() => signIn("github")}></button> */}
-            {/* <button className="hover:pointer-events-auto" onClick={() => signin()}>
-              Sign in with GitHub
-            </button> */}
-          </div>
-        </form>
+    <main className="flex min-h-screen items-center justify-center">
+      {session ? (
         <div>
-          <div></div>
+          <p>Welcome, {session.user?.email}!</p>
+          <button
+            onClick={() => signOut()}
+            className="px-4 py-2 bg-red-500 text-white rounded"
+          >
+            Sign Out
+          </button>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div>
+          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            <input
+              type="text"
+              placeholder="Email or Username"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="border p-2 rounded"
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border p-2 rounded"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 cursor-pointer text-white rounded"
+            >
+              Login Now
+            </button>
+          </form>
+          <div className="mt-10 text-center">
+            <button
+              className="px-4 py-1.5 bg-gray-900 cursor-pointer text-white rounded"
+              onClick={() => signIn("github")}
+            >
+              Sign in with Github
+            </button>
+          </div>
+        </div>
+      )}
+    </main>
   );
 }
