@@ -8,11 +8,13 @@ export default async function middleware(request: NextRequest) {
   });
   const url = request.nextUrl;
 
+  console.log("Token: ", token)
+
   if (
     token &&
     (url.pathname.startsWith("/sign-in") || url.pathname.startsWith("/signup"))
   ) {
-    return NextResponse.redirect(new URL("dashboard", request.url));
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
   if (
     !token &&
@@ -20,10 +22,10 @@ export default async function middleware(request: NextRequest) {
       url.pathname.startsWith("/settingsuser") ||
       url.pathname.startsWith("/performance"))
   ) {
-    return NextResponse.redirect(new URL("sign-in", request.url));
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
-  NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
@@ -33,6 +35,6 @@ export const config = {
     "/settingsuser",
     "/performance",
     "/sign-in",
-    "/sinup",
+    "/signup",
   ],
 };
