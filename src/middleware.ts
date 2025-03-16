@@ -1,40 +1,12 @@
-import { getToken } from "next-auth/jwt";
-import { NextRequest, NextResponse } from "next/server";
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-export default async function middleware(request: NextRequest) {
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-  const url = request.nextUrl;
-
-  console.log("Token: ", token)
-
-  if (
-    token &&
-    (url.pathname.startsWith("/sign-in") || url.pathname.startsWith("/signup"))
-  ) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-  if (
-    !token &&
-    (url.pathname.startsWith("/dashboard") ||
-      url.pathname.startsWith("/settingsuser") ||
-      url.pathname.startsWith("/performance"))
-  ) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
-  }
-
-  return NextResponse.next();
-}
+export default clerkMiddleware();
 
 export const config = {
   matcher: [
-    "/",
-    "/dashboard",
-    "/settingsuser",
-    "/performance",
-    "/sign-in",
-    "/signup",
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
   ],
 };

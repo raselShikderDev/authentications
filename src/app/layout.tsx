@@ -1,7 +1,7 @@
-import type { Metadata } from "next";
+import { type Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import { auth } from "@/auth";
+import Navbar from "@/components/navbar";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -13,12 +13,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
   return (
-    <html lang="en">
-      <body>
-        <SessionProvider session={session}>{children}</SessionProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        
+        <body><Navbar/>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
