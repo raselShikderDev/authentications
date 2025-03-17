@@ -4,3 +4,5 @@ NEXTAUTH_SECRET="Authenticaion"
 NEXTAUTH_URL="http://localhost:3000"
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_Y29uY3JldGUtbWFjYXctNTguY2xlcmsuYWNjb3VudHMuZGV2JA
 CLERK_SECRET_KEY=sk_test_YYGi9AftxPpwmKABWOd1KAwzggz9owujobrj57cH3z
+
+votahox232@cybtric.com
